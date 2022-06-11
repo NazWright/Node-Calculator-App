@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+  </head>
+  <body>
+    <h1>Calculator App</h1>
+    <form action="/" method="post" class="ajax" id="form">
+      <label for="userInput">Enter Equation</label>
+      <input type="text" id="equation" name="equation" />
+      <button type="submit" id="btn_submit">Calculate</button>
+    </form>
+    <div class="container" id="container"></div>
+  </body>
+
+  <script>
+    const requestObject = new XMLHttpRequest();
+
+    const form = document.getElementById("form");
+    const container = document.getElementById("container");
+
+    form.addEventListener("submit", function (event) {
+      // prevent page refresh.
+      event.preventDefault();
+      // get the form values
+      const formValues = new FormData(this);
+      requestObject.addEventListener("load", responseListener);
+      requestObject.open("POST", "/");
+      // // send form values in body here
+      requestObject.send(formValues);
+    });
+
+    // handles what you want to do with the response
+    function responseListener() {
+      container.innerHTML = this.responseText;
+    }
+  </script>
+</html>
